@@ -33,14 +33,14 @@ $(document).ready(function () {
         if (zapiswydatki) {
             tabwydatki = JSON.parse(zapiswydatki);
             tabwydatki.forEach(function (element) {
-                tabela("2", element.kwota, element.opis); 
+                tabela("2", element.kwota, element.opis, element.id);
             });
         }
 
         if (zapisprzychody) {
             tabprzychody = JSON.parse(zapisprzychody);
             tabprzychody.forEach(function (element) {
-                tabela("1", element.kwota, element.opis);
+                tabela("1", element.kwota, element.opis, element.id);
             });
         }
         aktualizujPodsumowanie();
@@ -58,9 +58,13 @@ $(document).ready(function () {
             return;
         }
 
+        let id = Date.now();
+
         let wpis = {
+
             opis: opisOperacji,
-            kwota: kwotaOperacji
+            kwota: kwotaOperacji,
+            id: id
         };
 
         if (typOperacji == "1") {
@@ -69,7 +73,7 @@ $(document).ready(function () {
             tabwydatki.push(wpis);
         }
 
-        tabela(typOperacji, kwotaOperacji, opisOperacji);
+        tabela(typOperacji, kwotaOperacji, opisOperacji, id);
 
         aktualizujPodsumowanie();
         zapis();
@@ -78,15 +82,16 @@ $(document).ready(function () {
         $("#ilosc").val("");
     });
 
-    function tabela(typ, kwota, opis) {
+    function tabela(typ, kwota, opis, id) {
+
         if (typ == 1) {
             $("#tabela").append(`<tr>
                 <td>Dochód</td>
                 <td style="color:green">${kwota}</td>
                 <td>${opis}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary">Edytuj</button>
-                    <button class="btn btn-sm btn-primary">Usuń</button>
+                    <button class="btn btn-sm btn-primary" id="edit-${id}">Edytuj</button>
+                    <button class="btn btn-sm btn-primary" id="usun-${id}">Usuń</button>
                 </td>
             </tr>`);
         } else {
@@ -95,12 +100,33 @@ $(document).ready(function () {
                 <td style="color:red">${kwota}</td>
                 <td>${opis}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary">Edytuj</button>
-                    <button class="btn btn-sm btn-primary">Usuń</button>
+                    <button class="btn btn-sm btn-primary" id="edit-${id}">Edytuj</button>
+                    <button class="btn btn-sm btn-primary" id="usun-${id}">Usuń</button>
                 </td>
             </tr>`);
         }
     }
+
+    $("#tabela").on("click", "[id^='usun-']", function () {
+        let idprzyciskausun = $(this).attr("id").replace("usun-", "");
+
+        for (let i = 0; i < tabwydatki.length; i++) {
+            if (tabwydatki[i].id == idprzyciskausun) {
+                tabwydatki.splice(i, 1);
+            }
+        }
+
+        for (let i = 0; i < tabprzychody.length; i++) {
+            if (tabprzychody[i].id == idprzyciskausun) {
+                tabprzychody.splice(i, 1);
+            }
+        }
+
+        $(this).closest("tr").remove();
+
+        aktualizujPodsumowanie();
+        zapis();
+    });
 
     wczytaj();
 });
