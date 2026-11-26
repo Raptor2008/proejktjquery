@@ -22,21 +22,29 @@ $(document).ready(function () {
     }
 
     function zapis() {
-        localStorage.setItem("wydatki", JSON.stringify(tabwydatki))
-        localStorage.setItem("przychody", JSON.stringify(tabprzychody))
+        localStorage.setItem("wydatki", JSON.stringify(tabwydatki));
+        localStorage.setItem("przychody", JSON.stringify(tabprzychody));
     }
 
-    function wczytaj(){
-        let zapiswydatki = localStorage.getItem("wydatki")
-        let zapisprzychody = localStorage.setItem("przychody", JSON.stringify(tabprzychody))
+    function wczytaj() {
+        let zapiswydatki = localStorage.getItem("wydatki");
+        let zapisprzychody = localStorage.getItem("przychody");
 
-        if(zapiswydatki){
-
-        }else if(zapisprzychody){
-            
+        if (zapiswydatki) {
+            tabwydatki = JSON.parse(zapiswydatki);
+            tabwydatki.forEach(function (element) {
+                tabela("2", element.kwota, element.opis); 
+            });
         }
-    }
 
+        if (zapisprzychody) {
+            tabprzychody = JSON.parse(zapisprzychody);
+            tabprzychody.forEach(function (element) {
+                tabela("1", element.kwota, element.opis);
+            });
+        }
+        aktualizujPodsumowanie();
+    }
 
     $("#form1").submit(function (e) {
         e.preventDefault();
@@ -61,39 +69,38 @@ $(document).ready(function () {
             tabwydatki.push(wpis);
         }
 
-        tabela(typOperacji, kwotaOperacji, opisOperacji)
+        tabela(typOperacji, kwotaOperacji, opisOperacji);
 
         aktualizujPodsumowanie();
-        zapis()
+        zapis();
 
         $("#opis").val("");
         $("#ilosc").val("");
     });
 
     function tabela(typ, kwota, opis) {
-
-        let bnumber = 1
-
         if (typ == 1) {
             $("#tabela").append(`<tr>
-        <td>Dochód</td>
-        <td style="color:green">${kwota}</td>
-        <td>${opis}</td>
-        <td>
-            <button class="btn btn-sm btn-primary">Edytuj</button>
-            <button class="btn btn-sm btn-primary">Usuń</button>
-        </td>
-        </tr>`);
+                <td>Dochód</td>
+                <td style="color:green">${kwota}</td>
+                <td>${opis}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary">Edytuj</button>
+                    <button class="btn btn-sm btn-primary">Usuń</button>
+                </td>
+            </tr>`);
         } else {
             $("#tabela").append(`<tr>
-        <td>Wydatek</td>
-        <td style="color:red">${kwota}</td>
-        <td>${opis}</td>
-        <td>
-            <button class="btn btn-sm btn-primary">Edytuj</button>
-            <button class="btn btn-sm btn-primary">Usuń</button>
-        </td>
-        </tr>`);
+                <td>Wydatek</td>
+                <td style="color:red">${kwota}</td>
+                <td>${opis}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary">Edytuj</button>
+                    <button class="btn btn-sm btn-primary">Usuń</button>
+                </td>
+            </tr>`);
         }
     }
+
+    wczytaj();
 });
