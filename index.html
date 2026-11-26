@@ -18,7 +18,7 @@
         <h1 style="margin-left: 35%;">Kalkulator budżetu domowego</h1>
     </div>
 
-    <h2 style="margin-left: 2%;">Dodaj</h2>
+    <h2 style="margin-left: 1%">Dodaj</h2>
     <br>
 
     <form id="form1">
@@ -37,7 +37,8 @@
 
             <div class="col-6" style="margin-top: 1%;">
                 <div class="input-group">
-                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="typoperacji">
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                        id="typoperacji">
                         <option value="1" selected>Dochód</option>
                         <option value="2">Wydatek</option>
                     </select>
@@ -51,6 +52,54 @@
             </div>
         </div>
     </form>
+
+    <br>
+    <br>
+    <br>
+
+    <h2 style="margin-left: 1%;">Podsumowanie</h2>
+
+    <br>
+
+    <div style="margin-left: 1%; display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-danger">Wydatki</h5>
+                <p id="suma-wydatki" class="card-text text-danger fw-bold">0.00 PLN</p>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-success">Przychody</h5>
+                <p id="suma-przychody" class="card-text text-success fw-bold">0.00 PLN</p>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Bilans</h5>
+                <p id="suma-bilans" class="card-text fw-bold">0.00 PLN</p>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="container mt-4">
+        <table class="table table-striped table-hover" id="tabela">
+            <thead>
+                <tr>
+                    <th>Typ Operacji</th>
+                    <th>Kwota</th>
+                    <th>Opis</th>
+                    <th>Edycja</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
