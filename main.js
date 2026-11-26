@@ -21,6 +21,23 @@ $(document).ready(function () {
         }
     }
 
+    function zapis() {
+        localStorage.setItem("wydatki", JSON.stringify(tabwydatki))
+        localStorage.setItem("przychody", JSON.stringify(tabprzychody))
+    }
+
+    function wczytaj(){
+        let zapiswydatki = localStorage.getItem("wydatki")
+        let zapisprzychody = localStorage.setItem("przychody", JSON.stringify(tabprzychody))
+
+        if(zapiswydatki){
+
+        }else if(zapisprzychody){
+            
+        }
+    }
+
+
     $("#form1").submit(function (e) {
         e.preventDefault();
 
@@ -47,6 +64,7 @@ $(document).ready(function () {
         tabela(typOperacji, kwotaOperacji, opisOperacji)
 
         aktualizujPodsumowanie();
+        zapis()
 
         $("#opis").val("");
         $("#ilosc").val("");
@@ -78,5 +96,4 @@ $(document).ready(function () {
         </tr>`);
         }
     }
-
 });
